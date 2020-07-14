@@ -54,6 +54,9 @@ def get_movies_list(list_type):
     headers = {
         "Authorization": f"Bearer {API_TOKEN}"
     }
-    response = requests.get(endpoint, headers=headers)
-    response.raise_for_status()
+    try:
+        response = requests.get(endpoint, headers=headers)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError:
+        return get_movies_list('popular')
     return response.json()
