@@ -6,8 +6,9 @@
 
   <div class="row">
     <div class="col-md-8">
-      <img src="{{ tmdb_image_url(movie.backdrop_path, "w780") }}">
-      <!--w780-->
+      <!-- <img src="{{ tmdb_image_url(movie.backdrop_path, "w500") }}">
+      w780-->
+      <img src="{{ tmdb_image_url(selected_backdrop.file_path, "w500") }}" />
     </div>
     <div class="col-md-4">
       <h3>{{ movie.tagline }}</h3>
