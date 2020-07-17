@@ -1,6 +1,7 @@
 import requests
 import random
 API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyODA1OGEyMDMzMWE4MmFjYzk2NjMxMTczZDlkOGU4OCIsInN1YiI6IjVmMGQ3YWFlN2EzYzUyMDAzYTE3ZDM3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9PuTn09_7LTlgIvoAMtcd5QkjKovf-bg-xZadRwOkeA"
+LIST_TYPE = ['top_rated', 'upcoming', 'now_playing', 'popular']
 
 
 def get_popular_movies():
@@ -50,6 +51,8 @@ def get_movie_images(movie_id):
 
 
 def get_movies_list(list_type):
+    if list_type not in LIST_TYPE:
+        list_type = 'popular'
     endpoint = f"https://api.themoviedb.org/3/movie/{list_type}"
     headers = {
         "Authorization": f"Bearer {API_TOKEN}"
