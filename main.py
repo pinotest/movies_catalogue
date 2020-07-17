@@ -40,5 +40,12 @@ def search():
     return render_template("search.html", movies=movies, search_query=search_query)
 
 
+@app.route('/tv_series')
+def tv_series():
+
+    movies = tmdb_client.tv_series()
+    return render_template("tv_series.html", movies=movies)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

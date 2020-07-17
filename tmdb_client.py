@@ -74,3 +74,14 @@ def search_movies(search_query):
     response.raise_for_status()
     response = response.json()
     return response['results']
+
+
+def tv_series():
+    endpoint = f"https://api.themoviedb.org/3/tv/airing_today"
+    headers = {
+        "Authorization": f"Bearer {API_TOKEN}"
+    }
+    response = requests.get(endpoint, headers=headers)
+    response.raise_for_status()
+    response = response.json()
+    return response['results']
