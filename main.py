@@ -1,10 +1,12 @@
 import tmdb_client
 import random
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for, redirect, flash
 
 app = Flask(__name__)
 
 LIST_TYPE = ['top_rated', 'upcoming', 'now_playing', 'popular']
+FAVORITES = set()
+app.secret_key = b'terefere'
 
 
 @app.route('/')
@@ -45,6 +47,29 @@ def tv_series():
 
     movies = tmdb_client.tv_series()
     return render_template("tv_series.html", movies=movies)
+
+
+@app.route("/favorites/add", methods=['POST'])
+def add_to_favorites():
+    data = request.form
+    movie_id = data.get('movie_id')
+    movie_title = data.get('movie_title')
+    if movie_id and movie_title:
+        FAVORITES.add(movie_id)
+        flash(f'Dodano film {movie_title} do ulubionych!')
+    return redirect(url_for('homepage'))
+
+
+@app.route("/favorites")
+def show_favorites():
+    if FAVORITES:
+        movies = []
+        for movie_id in FAVORITES:
+            movie_details = tmdb_client.get_single_movie(movie_id)
+            movies.append(movie_details)
+    else:
+        movies = []
+    return render_template("homepage.html", movies=movies)
 
 
 if __name__ == '__main__':
